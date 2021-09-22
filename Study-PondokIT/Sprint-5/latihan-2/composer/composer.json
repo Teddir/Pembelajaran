@@ -1,0 +1,20 @@
+{
+    "name": "teddi/latihan1",
+    "authors": [
+        {
+            "name": "Teddir",
+            "email": "ferryaja20000@gmail.com"
+        }
+    ],
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Trafesium\\": "trafesium/",
+            "Persegi\\": "persegi/",
+            "Lingkaran\\": "lingkaran/" 
+            
+        }
+    }
+}
