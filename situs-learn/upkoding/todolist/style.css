@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: rgba(210, 214, 240, 0.473);
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f3de9b4b;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: rgb(207, 207, 207);
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(207, 207, 207);
+    }
+
+    .card {
+      box-shadow: 2px 2px 10px #dbdbdb;
+      border-top-width: 4px;
+      margin-bottom: 8px;
+    }
+
+    .card.dragging {
+      opacity: .1;
+    }
+
+    button.cola:focus {
+      box-shadow: none !important;
+    }
+
+    button.cola {
+      transition: 1s
+    }
+
+    .signUpCard {
+      box-shadow: 0px 18px 35px #bdcff79a;
+      border: none;
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .inp {
+      border-color: #aec4f559;
+    }
+
+    .inp::placeholder {
+      color: var(--c, rgb(170, 170, 170));
+      font-size: 14px;
+    }

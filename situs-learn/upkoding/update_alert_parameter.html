@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // example
+  // (function (proxied) {
+  //   window.alert = function (desc, no) {
+  //     // do something here
+  //     let newNo = no - 1
+  //     if (newNo > 0) {
+  //       alert(desc, newNo)
+  //     }
+  //     return proxied.apply(this, arguments);
+  //   };
+  // })(window.alert);
+
+  // alert('as', 3)
+
+  (function (params) {
+    window.alert = function (desc, no = 1) {
+      let newNo = no - 1
+      if (newNo > 0) {
+        alert(desc, newNo)
+      }
+      return params.apply(this, arguments)
+    }
+  })(window.alert)
+  alert('hy Upkoding', 2)
+</script>
+
+</html>
