@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <title>FileSystem API</title>
+  <style>
+    .disa {
+      color: rgb(190, 190, 190);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(167, 80, 248);">
+      <a class="navbar-brand" href="#" style="color: aliceblue;">FileSystem API by tora</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false" style="color: aliceblue;">
+              File
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#" onclick="crateFile()">New</a>
+              <a class="dropdown-item" href="#" onclick="getFile()">Open...</a>
+              <a class="dropdown-item" href="#" onclick="saveFile()">Save</a>
+              <a class="dropdown-item" href="#" onclick="saveFileAs()">Save As...</a>
+              <div class="dropdown-divider">Open...</div>
+              <a class="dropdown-item" href="#" onclick="newWindow()">Exit</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="color: aliceblue;">
+            Edit
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#" onclick="copy()">Copy</a>
+            <a class="dropdown-item dis" href="#" onclick="undo()">Undo</a>
+            <a class="dropdown-item dis" href="#" onclick="redo()">Redo</a>
+          </div>
+          </li>
+
+          <li class="nav-item"> 
+            <a class="nav-link disabled judul" href="#" style="color: rgba(240, 240, 240, 0.377);">#Jualan Rame Rame</a>
+          </li>
+        </ul>
+        <!-- <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form> -->
+      </div>
+    </nav>
+    <!-- <div class="bd"></div> -->
+    <div class="form-group bu">
+      <textarea class="form-control bd" id="exampleFormControlTextarea1" rows="10" ></textarea>
+    </div>
+  </div>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/4.0.0-rc.14/immutable.min.js" integrity="sha512-Ndw/RR7NbYqZryxfps3dyNFjAbK5QmdiWvf2notGnAL/sGkx0dnGOKKGlK9XFWigs01BjqSX2Ws8xrsRNxOwtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    var x = document.querySelector('.bd')
+    var xi = document.querySelector('.bu')
+    var j = document.querySelector('.judul')
+    let fileHandle;
+    let status = false
+    // let status1 = false
+    var r = document.querySelectorAll('.dis')
+    r.forEach(aa => {
+      aa.classList.add('disa')
+    })
+    
+
+    async function getFile() {
+      var r = document.querySelectorAll('.dis')
+      // r.classList.add('disa')
+      r.forEach(aa => {
+        aa.classList.remove('disa')
+      })
+
+      try {
+        const pickerOpts = {
+        types: [{
+          description: 'Images',
+          accept: {
+            'image/*': ['.png', '.gif', '.jpeg', '.jpg', '.js', '.txt']
+          }
+        }, ],
+        excludeAcceptAllOption: true,
+        multiple: false
+      };
+
+      [fileHandle] = await window.showOpenFilePicker(pickerOpts);
+      // subdirHandle = await window.getDirectoryHandle(fileHandle, { create: true })
+
+      let readFile = await fileHandle.getFile()
+      let texts = await readFile.text()
+
+      // console.log(fileHandle);
+      // console.log(readFile);
+      // console.log(texts);
+      j.textContent = fileHandle.name
+      x.value = texts
+      x.textContent = texts
+      // console.log(x, status, status1);
+      status = true
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function crateFile() {
+      status = false
+      x.value = ''
+      x.textContent = ''
+      j.textContent = '#Jualan Rame Rame'
+    }
+
+    async function saveFile() {
+      try {
+        const opt = {
+          types: [
+            {
+              description: "text",
+              accept: {
+                "text/plain": [".txt", ".html", ".js", ".css"]
+              }
+            }
+          ]
+        };
+        let newHandle
+        console.log('a', x);
+        x.textContent = x.value
+        console.log(fileHandle);
+        console.log(x.value);
+        console.log('b', x);
+        
+        if (status) {
+          x.value = x.textContent
+          
+          const writableStream = await fileHandle.createWritable();
+          // console.log(writableStream);
+          
+          // write our file
+          await writableStream.write(x.textContent);
+          // close the file and write the contents to disk.
+          await writableStream.close();
+          // status = false
+        } else {
+          newHandle = await window.showSaveFilePicker(opt);
+          const writableStream = await newHandle.createWritable();
+          fileHandle = newHandle
+          // console.log(newHandle);
+          // write our file
+          await writableStream.write(x.value);
+          // close the file and write the contents to disk.
+          await writableStream.close();
+          status = true
+        }
+        j.textContent = fileHandle.name
+
+      } catch (error) {
+        console.log(error);
+      }
+
+      let writableStream
+      // if (status) {
+      //   status1 = true
+      //   // create a FileSystemWritableFileStream to write to
+      //   writableStream = await fileHandle.createWritable();
+      //   console.log(writableStream);
+      //   x.innerText = x.value
+      //   // write our file
+      //   await writableStream.write(x.value);
+      //   // close the file and write the contents to disk.
+      //   await writableStream.close();
+      // } else {
+        
+      //   // create a new handle
+      //   const newHandle = await window.showSaveFilePicker(opt);
+  
+      //   // create a FileSystemWritableFileStream to write to
+      //   writableStream = await newHandle.createWritable();
+      //   console.log(writableStream);
+      //   x.innerText = x.value
+      //   // write our file
+      //   await writableStream.write(x.value);
+  
+      //   // close the file and write the contents to disk.
+      //   await writableStream.close();
+      //   status = true
+      //   status1 = true
+      // }
+  }
+
+    async function saveFileAs() {
+     try {
+      const opt = {
+    types: [
+      {
+        description: "text",
+        accept: {
+          "text/plain": [".txt", ".html", ".js", ".css"]
+        }
+      }
+    ]
+  };
+      const newHandle = await window.showSaveFilePicker(opt);
+  
+        // create a FileSystemWritableFileStream to write to
+        const writableStream = await newHandle.createWritable();
+        console.log(writableStream);
+        x.innerText = x.value
+        // write our file
+        await writableStream.write(x.value);
+  
+        // close the file and write the contents to disk.
+        await writableStream.close();
+     } catch (error) {
+       console.log(error);
+     }
+    }
+
+    function newWindow() {
+      window.location.href = 'https://www.google.com/'
+    }
+
+    function copy() {
+
+        var copyTextarea = document.querySelector('.bd');
+        copyTextarea.focus();
+        copyTextarea.select();
+
+        try {
+          var successful = document.execCommand('copy');
+          var msg = successful ? 'successful' : 'unsuccessful';
+          console.log('Copying text command was ' + msg);
+        } catch (err) {
+          console.log('Oops, unable to copy');
+        }
+    }
+
+    let texts
+    function undo() {
+      if (x.value) {
+        a = x.value.split('')
+        texts = a.join('')
+        a.forEach(aa => {
+          a.pop()
+        })
+        x.value = a.join('')
+      } else {
+      }
+    }
+
+    function redo() {
+      var r = document.querySelector('.redo')
+      console.log(r);
+      if (texts) {
+        x.value = texts
+      }
+    }
+
+  </script>
+</body>
+
+</html>
